@@ -9,38 +9,44 @@ data "template_file" "user_data" {
 }
 
 resource "aws_instance" "wks" {
-  count = local.instance_count
+  count         = local.instance_count
   ami           = var.ami
   instance_type = var.instance_type
 
   tags = {
-    Name = "wks2"
+    Name = "wks"
   }
 
   volume_tags = {
-    Name = "wks2"
+    Name = "wks"
   }
 
-  key_name = var.key_name
+  key_name               = var.key_name
   vpc_security_group_ids = ["${module.sg_wks.this_security_group_id}"]
   root_block_device {
     volume_size           = 100
     delete_on_termination = "true"
   }
-  ebs_optimized = true
+  ebs_optimized           = true
   disable_api_termination = true
-  user_data = data.template_file.user_data.rendered
-  iam_instance_profile = "workstation"
+  user_data               = data.template_file.user_data.rendered
+  iam_instance_profile    = "workstation"
 }
 
+data "aws_vpc" "default" {
+  filter {
+    name   = "isDefault"
+    values = ["true"]
+  }
+}
 
 module "sg_wks" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "v3.4.0"
 
-  create = var.instance_enabled
-  vpc_id = var.vpc_id
-  name            = "wks2"
+  create          = var.instance_enabled
+  vpc_id          = data.aws_vpc.default.id
+  name            = "wks"
   use_name_prefix = false
   description     = "workstation security group"
 
@@ -59,15 +65,15 @@ module "sg_wks" {
 
 resource "aws_eip" "wks" {
   count = local.instance_count
-  vpc = true
+  vpc   = true
 
   tags = {
-    Name = "wks2"
+    Name = "wks"
   }
 }
 
 resource "aws_eip_association" "eip_assoc" {
-  count = local.instance_count
+  count         = local.instance_count
   instance_id   = aws_instance.wks[count.index].id
   allocation_id = aws_eip.wks[count.index].id
 }

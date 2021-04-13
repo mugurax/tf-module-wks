@@ -1,6 +1,6 @@
 variable "instance_enabled" {
   type        = bool
-  description = "Flag to control the instance creation. Set to false if it is necessary to skip instance creation"
+  description = "Set to false to skip creating the instance."
   default     = true
 }
 
@@ -12,13 +12,7 @@ variable "ami" {
 variable "instance_type" {
   type        = string
   description = "Defaults to t3.micro."
-  default = "t3.micro"
-}
-
-variable "vpc_id" {
-    type = string
-    description = "vpc id"
- 
+  default     = "t3.micro"
 }
 
 variable key_name {}
