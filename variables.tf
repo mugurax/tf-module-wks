@@ -20,3 +20,5 @@ variable "vpc_id" {
     description = "vpc id"
  
 }
+
+variable key_name {}
