@@ -68,6 +68,6 @@ resource "aws_eip" "wks" {
 
 resource "aws_eip_association" "eip_assoc" {
   count = local.instance_count
-  instance_id   = aws_instance.wks.id
-  allocation_id = aws_eip.wks.id
+  instance_id   = aws_instance.wks[count.index].id
+  allocation_id = aws_eip.wks[count.index].id
 }
