@@ -14,3 +14,9 @@ variable "instance_type" {
   description = "Defaults to t3.micro."
   default = "t3.micro"
 }
+
+variable "vpc_id" {
+    type = string
+    description = "vpc id"
+ 
+}
