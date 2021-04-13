@@ -14,11 +14,11 @@ resource "aws_instance" "wks" {
   instance_type = var.instance_type
 
   tags = {
-    Name = "wks"
+    Name = "wks2"
   }
 
   volume_tags = {
-    Name = "wks"
+    Name = "wks2"
   }
 
   key_name = var.key_name
@@ -40,7 +40,7 @@ module "sg_wks" {
 
   create = var.instance_enabled
   vpc_id = var.vpc_id
-  name            = "wks"
+  name            = "wks2"
   use_name_prefix = false
   description     = "workstation security group"
 
@@ -62,7 +62,7 @@ resource "aws_eip" "wks" {
   vpc = true
 
   tags = {
-    Name = "wks"
+    Name = "wks2"
   }
 }
 
