@@ -35,13 +35,11 @@ resource "aws_instance" "wks" {
 
 
 module "sg_wks" {
-  count = local.instance_count
-  version = "~> v3.4"
   source  = "terraform-aws-modules/security-group/aws"
+  version = "v3.4.0"
 
-
+  create = var.instance_enabled
   vpc_id = var.vpc_id
-
   name            = "wks"
   use_name_prefix = false
   description     = "workstation security group"
